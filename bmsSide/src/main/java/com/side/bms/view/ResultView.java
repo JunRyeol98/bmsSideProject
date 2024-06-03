@@ -36,9 +36,9 @@ public class ResultView {
         switch(successCode) {
             case "selectBook" : successMessage = "도서별 재고 조회에 성공하였습니다."; break;
             case "selectInventory" : successMessage = "창고별 재고 조회에 성공하였습니다."; break;
-            case "insert" : successMessage = "신규 도서 등록을 성공하였습니다."; break;
-            case "update" : successMessage = "도서 수정을 성공하였습니다."; break;
-            case "delete" : successMessage = "도서 삭제를 성공하였습니다."; break;
+            case "insert" : successMessage = "재고 입고를 성공하였습니다."; break;
+            case "update" : successMessage = "재고 출고를 성공하였습니다."; break;
+            case "move" : successMessage = "재고 이동을 성공하였습니다."; break;
         }
 
         System.out.println(successMessage);
@@ -57,13 +57,13 @@ public class ResultView {
                 errorMessage = "창고별 재고 목록 조회를 실패하였습니다.";
                 break;
             case "insert" :
-                errorMessage = "도서 등록을 실패하였습니다.";
+                errorMessage = "재고 입고를 실패하였습니다.";
                 break;
             case "update" :
-                errorMessage = "도서 수정을 실패하였습니다.";
+                errorMessage = "재고 출고에 실패하였습니다.";
                 break;
-            case "delete" :
-                errorMessage = "도서 삭제를 실패하였습니다.";
+            case "move" :
+                errorMessage = "재고 이동을 실패하였습니다.";
                 break;
         }
         System.out.println(errorMessage);

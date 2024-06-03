@@ -5,26 +5,56 @@
 <mapper namespace="com.side.bms.model.dao.InventoryMapper">
 
     <select id="selectBookQuantity" resultType="QuantityByBookDTO">
-        select
+        SELECT
         I.inventory_id,
         B.title,
         I.quantity
-        from
+        FROM
         tbl_book B JOIN tbl_inventory I
         ON B.book_id = I.book_id
     </select>
 
     <select id="selectLocationQuantity" resultType="QuantityByLocationDTO">
-        select
+        SELECT
+        I.location,
         B.book_id,
         B.title,
         I.quantity
-        from
+        FROM
         tbl_book B JOIN tbl_inventory I
         ON B.book_id = I.book_id
-        where
-        I.location = #{location}
+        ORDER BY I.location
+
     </select>
 
+    <insert id="insertInventory">
+        INSERT INTO
+            tbl_inventory(book_id, quantity, location, last_updated)
+        VALUES(#{bookId}, #{quantity}, #{location}, now())
+        WHERE
+            location in ('창고1','창고2','창고3')
+    </insert>
+
+    <update id="updateInventory">
+        UPDATE
+        tbl_inventory
+        SET
+        quantity = quantity - ${quantity},
+        last_updated = now()
+        WHERE
+        book_id = #{bookId}
+    </update>
+
+    <update id="moveInventory">
+        UPDATE
+        tbl_inventory
+        SET
+        location = #{location},
+        last_updated = now()
+        WHERE
+        book_id = #{bookId}
+        AND
+        location IN ('창고1','창고2','창고3')
+    </update>
 
 </mapper>

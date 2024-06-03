@@ -2,7 +2,9 @@ package com.side.bms.view;
 
 import com.side.bms.controller.InventoryController;
 
+import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MainView {
@@ -26,6 +28,7 @@ public class MainView {
             try {
                 System.out.print("메뉴번호를 입력하세요 : ");
                 menuNum = sc.nextInt();
+                sc.nextLine();
 
                 if (menuNum < 0) {
                     System.out.println("정수를 입력해주세요.");
@@ -71,7 +74,7 @@ public class MainView {
             try {
                 System.out.print("메뉴번호를 입력하세요 : ");
                 menuNum = sc.nextInt();
-
+                sc.nextLine();
                 if (menuNum < 0) {
                     System.out.println("정수를 입력해주세요.");
                     break;
@@ -83,16 +86,20 @@ public class MainView {
                 System.out.println("입력 오류가 발생했습니다.");
             }
             switch (menuNum) {
+
                 case 1:
                     searchInventoryView();
                     break;
                 case 2:
+                    inventoryController.insertInInventory(inputInInventory());
                     break;
 
                 case 3:
+                    inventoryController.updateOutInventory(inputOutInventory());
                     break;
 
                 case 4:
+                    inventoryController.moveInventory(inputMoveInventory());
                     break;
 
                 case 9:
@@ -105,6 +112,7 @@ public class MainView {
         }
     }
 
+
     // 재고 조회 뷰
     private void searchInventoryView() {
         while (true) {
@@ -116,13 +124,12 @@ public class MainView {
                     ========================
                     1. 도서별 재고조회
                     2. 창고별 재고 조회
-                    3. 도서 전체조회
                     9. 이전메뉴
                     """);
             try {
                 System.out.print("메뉴번호를 입력하세요 : ");
                 menuNum = sc.nextInt();
-
+                sc.nextLine();
                 if (menuNum < 0) {
                     System.out.println("정수를 입력해주세요.");
                     break;
@@ -138,15 +145,7 @@ public class MainView {
                     inventoryController.selectBookQuantity();
                     break;
                 case 2:
-                    System.out.println("""
-                            =========================
-                            창 고 별 재 고 조 회
-                            =========================
-                            """);
-                    System.out.println("[창고1 | 창고2 | 창고3]");
-                    System.out.print("조회하실 창고이름을 입력하세요 : ");
-                    sc.nextLine();
-                    inventoryController.selectLocationQuantity(inputLocation());
+                    inventoryController.selectLocationQuantity();
 
                     break;
                 case 9:
@@ -158,10 +157,54 @@ public class MainView {
         }
     }
 
+    // 재고 입고
+    private Map<String, String> inputInInventory() {
+        System.out.print("도서 ID를 입력하세요 : ");
+        String bookId = sc.nextLine();
 
-    private String inputLocation() {
-        String locationName = sc.nextLine();
-        return locationName;
+        System.out.print("수량을 입력하세요 : ");
+        String bookQuantity = sc.nextLine();
+
+        System.out.print("창고 위치를 입력하세요(창고1,창고2,창고3) : ");
+        String bookLocation = sc.nextLine();
+
+        Map<String, String> map = new HashMap<>();
+        map.put("bookId", bookId);
+        map.put("bookQuantity", bookQuantity);
+        map.put("bookLocation", bookLocation);
+        return map;
     }
+
+    // 재고 출고
+    private Map<String, String> inputOutInventory() {
+        System.out.print("출고할 도서 ID를 입력하세요 : ");
+        String bookId = sc.nextLine();
+
+        System.out.print("출고 할 수량을 입력하세요 : ");
+        String bookQuantity = sc.nextLine();
+
+        Map<String, String> map = new HashMap<>();
+        map.put("bookId", bookId);
+        map.put("bookQuantity", bookQuantity);
+        return map;
+    }
+
+    // 재고 이동
+    private Map<String, String> inputMoveInventory() {
+        System.out.print("이동할 도서 ID를 입력하세요 : ");
+        String bookId = sc.nextLine();
+
+        System.out.print("이동할 창고 위치를 입력하세요(창고1,창고2,창고3) : ");
+        String bookLocation = sc.nextLine();
+
+        Map<String, String> map = new HashMap<>();
+        map.put("bookId", bookId);
+        map.put("bookLocation", bookLocation);
+
+        return map;
+
+    }
+
+
 
 }

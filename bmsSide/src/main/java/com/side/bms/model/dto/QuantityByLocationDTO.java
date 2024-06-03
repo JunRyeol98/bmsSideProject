@@ -16,7 +16,7 @@ public class QuantityByLocationDTO {
 
     @Override
     public String toString() {
-        return "[ 도서번호 : " + bookId +" | 도서명 : " + title +
+        return "[ 창고위치: "+ location + " | 도서번호 : " + bookId +" | 도서명 : " + title +
                 " | 재고량 : " + quantity + " ]";
     }
 
